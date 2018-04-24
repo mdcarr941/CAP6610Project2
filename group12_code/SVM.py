@@ -8,7 +8,7 @@ import sklearn.svm as svm
 #from sklearn.metrics import classification_report
 
 
-def TrainMyClassifierSVM(X_train, y_train, **kwargs):
+def TrainMyClassifierSVM(X_train, y_train, ifprint = False, **kwargs):
     clf = svm.SVC(kernel="linear", C=2.0, decision_function_shape = 'ovo', **kwargs).fit(X_train, y_train)
     # hyperParam = clf.get_params()
     # #create a dictionary for estimated parameters
@@ -25,6 +25,8 @@ def TrainMyClassifierSVM(X_train, y_train, **kwargs):
     # estParam["_gamma"] = clf._gamma
     # estParam["classes_"] = clf.classes_
     #return [estParam, hyperParam, y_predict]
+    if ifprint:
+        print "the number of support vectors is: ", clf.n_support_, len(clf.support_)
     return clf
 
 def TestMyClassifierSVM(XTest, EstParameters):

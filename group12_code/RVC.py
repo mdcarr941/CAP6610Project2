@@ -1,4 +1,5 @@
-from skrvm import RVC
+#from skrvm import RVC
+from rvm import RVC
 from sklearn.multiclass import OneVsOneClassifier
 
 def TrainMyClassifierRVM(X_train, y_train, **kwargs):
