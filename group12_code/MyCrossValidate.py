@@ -1,4 +1,4 @@
-from TrainMyClassifier import *
+from TrainMyClassifier import TrainMyClassifier
 from utility_functions import *
 import numpy as np
 
