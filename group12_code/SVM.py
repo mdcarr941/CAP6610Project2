@@ -8,7 +8,8 @@ import sklearn.svm as svm
 #from sklearn.metrics import classification_report
 
 
-def TrainMyClassifierSVM(X_train, y_train, param):
+def TrainMyClassifierSVM(X_train, y_train):
+    param = ["linear", 2.0]
     kernelMethod = param[0]
     Cvalue = param[1]
     clf = svm.SVC(kernel=kernelMethod, C=Cvalue, decision_function_shape = 'ovo').fit(X_train, y_train)
@@ -49,7 +50,3 @@ def TestMyClassifierSVM(XTest, EstParameters):
     clf2 = EstParameters
     y_predict = clf2.predict(XTest)
     return y_predict
-    
-
-
-    
