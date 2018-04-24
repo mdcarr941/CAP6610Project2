@@ -15,10 +15,12 @@ class TestRunner:
         self.tests.append(test)
         return test
 
-    def run(self):
+    def run(self, names=None):
         ''' Run all tests in the list. '''
         print 'Running tests.'
         for test in self.tests:
+            if names != None and not test.__name__ in names:
+                continue
             print
             try:
                 test()
@@ -125,7 +127,7 @@ def test_SVC():
     for train_index, test_index in kf.split(features_train):
         X_estimate, X_validate = features_train[train_index], features_train[test_index]
         y_estimate, y_validate = targetOutput_train[train_index], targetOutput_train[test_index]
-        estParam = SVM.TrainMyClassifierSVM(X_estimate, y_estimate, param)
+        estParam = SVM.TrainMyClassifierSVM(X_estimate, y_estimate)
         score1 = estParam.score(X_validate,y_validate)
         score += score1
         print score1
@@ -176,6 +178,9 @@ def test_SVC():
 
 
 if __name__ == "__main__":
-    testrunner.run()
+    if len(sys.argv) > 1:
+        testrunner.run(names=sys.argv)
+    else:
+        testrunner.run()
     print
     print testrunner
