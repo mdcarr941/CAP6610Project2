@@ -47,7 +47,3 @@ def TestMyClassifierSVM(XTest, EstParameters):
     clf2 = EstParameters
     y_predict = clf2.predict(XTest)
     return y_predict
-    
-
-
-    
