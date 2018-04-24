@@ -1,11 +1,13 @@
 from utility_functions import *
 
-def TestMyClassifier(XTest, Parameters, EstParameters):
+def TestMyClassifier(XTest, Parameters, Classifier):
     '''
     Arguments:
         XTest - A matrix of feature vectors, where each row is a sample vector.
         Parameters - A dictionary of parameters. Algorithm dependant.
-        EstParameters - A dictionary of the fitted model parameters. 
+        Classifier - A classifier object which has already been fitted to the data.
     Returns:
         Ytest - Class labels for each row of XTest.
     '''
+    
+    return Classifier.predict(XTest) 

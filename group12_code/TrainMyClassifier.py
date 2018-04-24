@@ -5,7 +5,9 @@ import GPy
 
 def TrainMyClassifier(XEstimate,XValidate,Parameters,ClassLabels):
     '''
-        The function trains the corresponding classifier based on the choice
+        This function trains the corresponding classifier based on the choice
+        The Parameters argument must be a string in the set {'RVM', 'SVM', 'GPR'},
+        indicating which classification algorithm to train.
     '''
     #standardize the estimate and validate data
     XEstimateScaled = scale(XEstimate)
