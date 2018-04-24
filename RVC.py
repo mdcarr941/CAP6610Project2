@@ -9,8 +9,8 @@ import random
 from sklearn.cross_validation import train_test_split
 from sklearn.multiclass import OneVsOneClassifier
 
-def TrainMyClassifierRVM(X_train, y_train):
-    classifier = OneVsOneClassifier(RVC(n_iter=1))
+def TrainMyClassifierRVM(X_train, y_train, **kwargs):
+    classifier = OneVsOneClassifier(RVC(n_iter=1, **kwargs))
     classifier.fit(X_train, y_train)
     return classifier
 

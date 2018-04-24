@@ -8,11 +8,11 @@ import sklearn.svm as svm
 #from sklearn.metrics import classification_report
 
 
-def TrainMyClassifierSVM(X_train, y_train):
+def TrainMyClassifierSVM(X_train, y_train, **kwargs):
     param = ["linear", 2.0]
     kernelMethod = param[0]
     Cvalue = param[1]
-    clf = svm.SVC(kernel=kernelMethod, C=Cvalue, decision_function_shape = 'ovo').fit(X_train, y_train)
+    clf = svm.SVC(kernel=kernelMethod, C=Cvalue, decision_function_shape = 'ovo', **kwargs).fit(X_train, y_train)
     # hyperParam = clf.get_params()
     # #create a dictionary for estimated parameters
     # estParam = {}

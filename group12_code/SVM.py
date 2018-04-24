@@ -9,7 +9,7 @@ import sklearn.svm as svm
 
 
 def TrainMyClassifierSVM(X_train, y_train, **kwargs):
-    clf = svm.SVC(decision_function_shape = 'ovo', **kwargs).fit(X_train, y_train)
+    clf = svm.SVC(kernel="linear", C=2.0, decision_function_shape = 'ovo', **kwargs).fit(X_train, y_train)
     # hyperParam = clf.get_params()
     # #create a dictionary for estimated parameters
     # estParam = {}
