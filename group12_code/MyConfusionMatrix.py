@@ -7,4 +7,4 @@ def MyConfusionMatrix(Y, ClassLabels):
 
     A = make_confusion_matrix(ClassLabels, Y)
     print_confusion_matrix(A)
-    return A, A.mean()
+    return A, average_accuracy(ClassLabels, Y)

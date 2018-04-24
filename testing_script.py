@@ -17,9 +17,12 @@ class TestRunner:
 
     def run(self):
         ''' Run all tests in the list. '''
+        print 'Running tests.'
         for test in self.tests:
+            print
             try:
                 test()
+                print 'Test passed:', test.__name__
             except Exception as e:
                 print 'Exception in:', test.__name__
                 traceback.print_exc(file=sys.stdout)
@@ -58,8 +61,8 @@ def assert_col_sum_one(A):
 
 @testrunner.add
 def confusion_matrix_test_case1():
-    targets =   [1, 1, 0, 1]
-    estimates = [1, 0, 0, 1]
+    targets =   np.array([1, 1, 0, 1])
+    estimates = np.array([1, 0, 0, 1])
     expectedA = np.array([
         [1.  , 0.  ],
         [1./3, 2./3]
@@ -68,8 +71,8 @@ def confusion_matrix_test_case1():
 
 @testrunner.add
 def confusion_matrix_test_case2():
-    targets =   [1, 1, 0, 1, 0]
-    estimates = [1, 0, 0, 1, 1]
+    targets =   np.array([1, 1, 0, 1, 0])
+    estimates = np.array([1, 0, 0, 1, 1])
     expectedA = np.array([
         [1. / 2, 1. / 2],
         [1. / 3, 2. / 3]
@@ -78,8 +81,8 @@ def confusion_matrix_test_case2():
 
 @testrunner.add
 def test_MyConfusionMatrix():
-    targets =   [1, 1, 0, 1, 0]
-    estimates = [1, 0, 0, 1, 1]
+    targets =   np.array([1, 1, 0, 1, 0])
+    estimates = np.array([1, 0, 0, 1, 1])
     MyConfusionMatrix(estimates, targets)
 
 @testrunner.add
