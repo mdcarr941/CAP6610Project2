@@ -1,11 +1,7 @@
-#!/usr/bin/env python2
 # Various utility functions.
 
 from scipy.io import loadmat 
 import numpy as np
-
-FEATVECFILE = 'Proj2FeatVecsSet1.mat'
-TARGETFILE = 'Proj2TargetOutputsSet1.mat'
 
 def flatten_targets(y):
     ''' The targets which are vectors to scalars. '''
@@ -14,12 +10,18 @@ def flatten_targets(y):
         ymod[k] = y[k].argmax()
     return ymod
 
-def loaddata():
+def loaddata(
+    featvecfile='Proj2FeatVecsSet1.mat',
+    targetfile='Proj2TargetOutputsSet1.mat',
+    doflatten=True
+):
     ''' Load the mat files containing feature vecs and targets. '''
-    mat = loadmat(FEATVECFILE)
+    mat = loadmat(featvecfile)
     X = mat['Proj2FeatVecsSet1']
-    mat = loadmat(TARGETFILE)
+    mat = loadmat(targetfile)
     y = mat['Proj2TargetOutputsSet1']
+    if doflatten:
+        y = flatten_targets(y)
     return X, y 
 
 def argfirst(vec, entry):
@@ -39,7 +41,7 @@ def make_confusion_matrix(target, estimates):
     '''
     class_lbls = np.unique(target)
 
-    estimates_idx = dict()
+    estimates_idx = {}
     for m in class_lbls:
         estimates_idx[m] = (estimates == m)
 
@@ -53,32 +55,15 @@ def make_confusion_matrix(target, estimates):
 
     return A
 
-def print_confusion_matrix(A):
-    format_string = '{0:4.3f}'
+def print_confusion_matrix(A, precision=3):
+    '''
+    Print a (confusion) matrix to the console. The parameter precision is the number
+    of decimal places to include in the output.
+    '''
+    format_string = '{0:' + str(precision + 1) + '.' + str(precision) + 'f}'
     for row in A:
         print '[',
         for k in range(len(row) - 1):
             entry = row[k]
             print format_string.format(entry) + ',',
         print format_string.format(row[-1]) + ' ]'
-            
-
-def MyConfusionMatrix(Y, ClassLabels):
-    '''
-    Compute a confusion matrix for an estimate vector Y and a target vector ClassLabels.
-    '''
-
-    A = make_confusion_matrix(ClassLabels, Y)
-    print_confusion_matrix(A)
-    return A, A.mean()
-    
-
-def TestMyClassifier(XTest, Parameters, EstParameters):
-    '''
-    Arguments:
-        XTest - A matrix of feature vectors, where each row is a sample vector.
-        Parameters - A dictionary of parameters. Algorithm dependant.
-        EstParameters - A dictionary of the fitted model parameters. 
-    Returns:
-        Ytest - Class labels for each row of XTest.
-    '''
