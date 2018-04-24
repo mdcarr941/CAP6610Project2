@@ -29,6 +29,8 @@ class TestRunner:
                 print 'Exception in:', test.__name__
                 traceback.print_exc(file=sys.stdout)
                 self.failed.append(test)
+        print
+        print self
 
     def __str__(self):
         output = 'All tests passed.'
@@ -176,11 +178,34 @@ def test_SVC():
     #     #print("Train data: ", X_train, "Target output:", y_train)
     #     #print("Test data: ", X_test, "Test target output:", y_test)
 
+@testrunner.add
+def test_train_svm():
+    X, y = loaddata()
+    validate_idx = make_random_indices(200, len(y))
+    estimate_idx = make_random_indices(1000, len(y))
+    return TrainMyClassifier(
+        X[estimate_idx], X[validate_idx],
+        'SVM', y[estimate_idx]
+    )
+
+@testrunner.add
+def test_train_rvm():
+    X, y = loaddata()
+    validate_idx = make_random_indices(200, len(y))
+    estimate_idx = make_random_indices(1000, len(y))
+    return TrainMyClassifier(
+        X[estimate_idx], X[validate_idx],
+        'RVM', y[estimate_idx]
+    )
+
+@testrunner.add
+def test_cross_validation():
+    X, y = loaddata()
+    indices = make_random_indices(1000, len(y))
+    return MyCrossValidate(X[indices], 5, 'SVM', y[indices])
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         testrunner.run(names=sys.argv)
     else:
         testrunner.run()
-    print
-    print testrunner

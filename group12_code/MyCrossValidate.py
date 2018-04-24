@@ -26,7 +26,9 @@ def MyCrossValidate(XTrain, Nf, Parameters, ClassLabels):
     masks = []
     for fold_size in fold_sizes:
         end += fold_size
-        masks.append(indices == np.arange(start, end))
+        mask = np.zeros((num_samples,), dtype=np.bool)
+        mask[indices[start:end]] = np.ones((end - start,), dtype=np.bool)
+        masks.append(mask)
         start = end
 
     # Train, test, and compute a confusion matrix for each fold.
@@ -34,9 +36,9 @@ def MyCrossValidate(XTrain, Nf, Parameters, ClassLabels):
     EstParametersList = []
     Ytrain = np.ndarray(ClassLabels.shape, dtype=ClassLabels.dtype)
     for mask in masks:
-        XEstimate = XTrain[~mask]
-        XValidate = XTrain[mask]
-        YValidate, EstParameters = TrainMyClassifier(XEstimate, XValidate, Parameters, ClassLabels)
+        YValidate, EstParameters = TrainMyClassifier(
+            XTrain[~mask], XTrain[mask], Parameters, ClassLabels[~mask]
+        )
         EstConfMatrices.append(make_confusion_matrix(ClassLabels[mask], YValidate))
         EstParametersList.append(EstParameters)
         Ytrain[mask] = YValidate

@@ -2,6 +2,7 @@
 
 from scipy.io import loadmat 
 import numpy as np
+import numpy.random
 
 def flatten_targets(y):
     ''' The targets which are vectors to scalars. '''
@@ -79,3 +80,7 @@ def average_accuracy(targets, estimates):
             return 1
         return 0
 
+def make_random_indices(length, total):
+    indices = np.arange(total)
+    np.random.shuffle(indices)
+    return indices[:length]
