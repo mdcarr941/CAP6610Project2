@@ -14,15 +14,17 @@ def TrainMyClassifier(XEstimate, XValidate, Parameters, ClassLabels):
     XEstimateScaled = scale(XEstimate)
     XValidateScaled = scale(XValidate)
 
-    if(Parameters == 'RVM'):
-        EstParameters = TrainMyClassifierRVM(XEstimateScaled, ClassLabels)
-    elif(Parameters == 'SVM'):
-        EstParameters = TrainMyClassifierSVM(XEstimateScaled, ClassLabels)
-    elif(Parameters == 'GPR'):
-        EstParameters = TrainMyClassifierGPR(XEstimateScaled, ClassLabels)
+    algorithm = Parameters.pop('algorithm')
+    if(algorithm == 'RVM'):
+        EstParameters = TrainMyClassifierRVM(XEstimateScaled, ClassLabels, **Parameters)
+    elif(algorithm == 'SVM'):
+        EstParameters = TrainMyClassifierSVM(XEstimateScaled, ClassLabels, **Parameters)
+    elif(algorithm == 'GPR'):
+        EstParameters = TrainMyClassifierGPR(XEstimateScaled, ClassLabels, **Parameters)
     else:
         raise ValueError(
-            'Wrong parameters value. The values can either be RVM, SVM or GPR')
+            'Wrong parameters value. The values can either be RVM, SVM or GPR'
+        )
 
     YValidate = EstParameters.predict(XValidateScaled)
     return YValidate, EstParameters

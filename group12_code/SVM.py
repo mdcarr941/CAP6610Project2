@@ -6,10 +6,10 @@ import numpy as np
 import sklearn.svm as svm
 #from sklearn.metrics import confusion_matrix
 #from sklearn.metrics import classification_report
-
+from sklearn.multiclass import OneVsOneClassifier
 
 def TrainMyClassifierSVM(X_train, y_train, ifprint = False, **kwargs):
-    clf = svm.SVC(kernel="linear", C=2.0, decision_function_shape = 'ovo', **kwargs).fit(X_train, y_train)
+    #clf = svm.SVC(kernel="linear", C=2.0, decision_function_shape = 'ovo', **kwargs).fit(X_train, y_train)
     # hyperParam = clf.get_params()
     # #create a dictionary for estimated parameters
     # estParam = {}
@@ -25,9 +25,18 @@ def TrainMyClassifierSVM(X_train, y_train, ifprint = False, **kwargs):
     # estParam["_gamma"] = clf._gamma
     # estParam["classes_"] = clf.classes_
     #return [estParam, hyperParam, y_predict]
+    clf2 = svm.SVC(kernel="linear", C=2.0, decision_function_shape = 'ovo', **kwargs)
+    clf2 = OneVsOneClassifier(clf2)
+    clf2.fit(X_train, y_train)
+    #print len(clf2.estimators_)#, clf2.estimators_
+    
     if ifprint:
-        print "the number of support vectors is: ", clf.n_support_, len(clf.support_)
-    return clf
+        numVct = 0
+        for est in clf2.estimators_:
+            numVct += len(est.support_)
+            print est.n_support_, len(est.support_)
+        print "the number of support vectors is: ", numVct #clf.n_support_, len(clf.support_)
+    return clf2
 
 def TestMyClassifierSVM(XTest, EstParameters):
     # estParam = EstParameters[0]

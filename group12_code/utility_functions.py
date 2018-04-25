@@ -73,6 +73,9 @@ def print_confusion_matrix(A, precision=3):
         print format_string.format(row[-1]) + ' ]'
 
 def average_accuracy(targets, estimates):
+    '''
+    Compute the average number of entries which are the same in targets and estimates.
+    '''
     try:
         return (targets == estimates).sum() / len(targets)
     except ZeroDivisionError:
@@ -81,6 +84,9 @@ def average_accuracy(targets, estimates):
         return 0
 
 def make_random_indices(length, total):
+    '''
+    Make a vector of a specified length with entries in range(total).
+    '''
     indices = np.arange(total)
     np.random.shuffle(indices)
     return indices[:length]

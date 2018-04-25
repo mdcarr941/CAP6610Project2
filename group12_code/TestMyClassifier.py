@@ -1,13 +1,19 @@
-from utility_functions import *
+from SVM import TestMyClassifierSVM
+from RVC import TestMyClassifierRVM
+from GPR import TestMyClassifierGPR
 
 def TestMyClassifier(XTest, Parameters, Classifier):
     '''
-    Arguments:
-        XTest - A matrix of feature vectors, where each row is a sample vector.
-        Parameters - A dictionary of parameters. Algorithm dependant.
-        Classifier - A classifier object which has already been fitted to the data.
-    Returns:
-        Ytest - Class labels for each row of XTest.
+    Run a trained classifer on a given set of data and return the resulting class labels.
     '''
     
-    return Classifier.predict(XTest) 
+    if(Parameters == 'RVM'):
+        YTest = TestMyClassifierRVM(XTest,Classifier)
+    elif(Parameters == 'SVM'):
+        YTest = TestMyClassifierSVM(XTest,Classifier)
+    elif(Parameters == 'GPR'):
+        YTest = TestMyClassifierGPR(XTest,Classifier)
+    else:
+        raise ValueError('Wrong parameters value. The values can either be RVM, SVM or GPR')
+
+    return YTest

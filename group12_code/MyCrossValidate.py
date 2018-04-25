@@ -4,7 +4,8 @@ import numpy as np
 
 def MyCrossValidate(XTrain, Nf, Parameters, ClassLabels):
     '''
-    Perform cross validation.
+    Divide a set of data up in Nf chunks, train on the complement of the chunk,
+    and then classify the chunk.
     '''
 
     # Determine the size of each fold.
