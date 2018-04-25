@@ -1,7 +1,8 @@
 from sklearn.preprocessing import scale
 from SVM import TrainMyClassifierSVM
 from RVC import TrainMyClassifierRVM
-import GPy
+from GPR import TrainMyClassifierGPR
+
 
 
 def TrainMyClassifier(XEstimate,XValidate,Parameters,ClassLabels):

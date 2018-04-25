@@ -1,4 +1,5 @@
 #from skrvm import RVC
+import numpy as np
 from rvm import RVC
 from sklearn.multiclass import OneVsOneClassifier
 
@@ -18,6 +19,12 @@ def TrainMyClassifierRVM(X_train, y_train, ifprint = False, **kwargs):
     return classifier
 
 def TestMyClassifierRVM(XTest, EstParameters):
+    y_predict = []
     clf2 = EstParameters
-    y_predict = clf2.predict(XTest)
+    probabilities = clf2.decision_function(XTest)
+    for prob in probabilities:
+        if(max(prob)< 3):
+            print 'j'
+        index = np.argmax(prob,axis=None)
+        y_predict.append(index)
     return y_predict
