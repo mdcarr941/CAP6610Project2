@@ -59,18 +59,20 @@ def make_confusion_matrix(targets, estimates):
 
     return A
 
-def print_confusion_matrix(A, precision=3):
+def print_confusion_matrix(A, sep=',', precision=3):
     '''
     Print a (confusion) matrix to the console. The parameter precision is the number
     of decimal places to include in the output.
     '''
     format_string = '{0:' + str(precision + 1) + '.' + str(precision) + 'f}'
+    output = ""
     for row in A:
-        print '[',
         for k in range(len(row) - 1):
             entry = row[k]
-            print format_string.format(entry) + ',',
-        print format_string.format(row[-1]) + ' ]'
+            output += format_string.format(entry) + sep
+        output += format_string.format(row[-1])
+    print output
+    return output
 
 def average_accuracy(targets, estimates):
     '''

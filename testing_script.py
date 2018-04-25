@@ -1,7 +1,8 @@
 #!/usr/bin/env python2
 # Script used to test code written for this project.
 
-from group12_code import *
+import group12_code as code
+import numpy as np
 import traceback
 import sys
 
@@ -22,6 +23,7 @@ class TestRunner:
             if names != None and not test.__name__ in names:
                 continue
             print
+            print 'Running test:', test.__name__
             try:
                 test()
                 print 'Test passed:', test.__name__
@@ -51,7 +53,7 @@ def test_make_confusion_matrix(targets, estimates, expectedA, doprint=False):
     equals expectedA. If doprint is true then the computed confusion matrix A,
     expectedA, and A == expectedA are printed.
     '''
-    A = make_confusion_matrix(targets, estimates)
+    A = code.make_confusion_matrix(targets, estimates)
     assert_col_sum_one(A)
     assert(A == expectedA).all()
     if doprint: 
@@ -87,7 +89,7 @@ def confusion_matrix_test_case2():
 def test_MyConfusionMatrix():
     targets =   np.array([1, 1, 0, 1, 0])
     estimates = np.array([1, 0, 0, 1, 1])
-    MyConfusionMatrix(estimates, targets)
+    return code.MyConfusionMatrix(estimates, targets)
 
 @testrunner.add
 def test_SVC():
@@ -103,7 +105,7 @@ def test_SVC():
     # features = sio.loadmat("Proj2FeatVecsSet1.mat").get("Proj2FeatVecsSet1")
     # targetOutput = sio.loadmat("Proj2TargetOutputsSet1.mat").get("Proj2TargetOutputsSet1")
     #read in data
-    [features, targetOutput] = loaddata()
+    [features, targetOutput] = code.loaddata()
     # print features, features.shape
     # print targetOutput, targetOutput.shape
     index = np.arange(features.shape[0])
@@ -129,14 +131,14 @@ def test_SVC():
     for train_index, test_index in kf.split(features_train):
         X_estimate, X_validate = features_train[train_index], features_train[test_index]
         y_estimate, y_validate = targetOutput_train[train_index], targetOutput_train[test_index]
-        estParam = SVM.TrainMyClassifierSVM(X_estimate, y_estimate)
+        estParam = code.SVM.TrainMyClassifierSVM(X_estimate, y_estimate)
         score1 = estParam.score(X_validate,y_validate)
         score += score1
         print score1
 
     print "average score: ", score/5.0
 
-    y_predict_clf2 = SVM.TestMyClassifierSVM(features_test, estParam)
+    y_predict_clf2 = code.SVM.TestMyClassifierSVM(features_test, estParam)
 
     confMat = confusion_matrix(targetOutput_test, y_predict_clf2)
     print confMat
@@ -179,43 +181,71 @@ def test_SVC():
     #     #print("Test data: ", X_test, "Test target output:", y_test)
 
 def run_train(algorithm):
-    X, y = loaddata()
-    validate_idx = make_random_indices(200, len(y))
-    estimate_idx = make_random_indices(1000, len(y))
+    X, y = code.loaddata()
+    validate_idx = code.make_random_indices(200, len(y))
+    estimate_idx = code.make_random_indices(1000, len(y))
     Parameters = {'algorithm': algorithm}
-    return TrainMyClassifier(
+    return code.TrainMyClassifier(
         X[estimate_idx], X[validate_idx],
         Parameters, y[estimate_idx]
     )
 
 @testrunner.add
 def test_train_svm():
-    run_train('SVM')
+    return run_train('SVM')
 
 @testrunner.add
 def test_train_rvm():
-    run_train('RVM')
+    return run_train('RVM')
 
 @testrunner.add
 def test_train_gpr():
-    run_train('GPR')
+    return run_train('GPR')
 
 def run_cross_validation(algorithm):
-    X, y = loaddata()
-    indices = make_random_indices(1000, len(y))
-    return MyCrossValidate(X[indices], 5, {'algorithm': algorithm}, y[indices])
+    X, y = code.loaddata()
+    indices = code.make_random_indices(1000, len(y))
+    return code.MyCrossValidate(X[indices], 5, {'algorithm': algorithm}, y[indices])
 
 @testrunner.add
 def test_cross_validation_svm():
-    run_cross_validation('SVM')
+    return run_cross_validation('SVM')
 
 @testrunner.add
 def test_cross_validation_rvm():
-    run_cross_validation('RVM')
+    return run_cross_validation('RVM')
 
 @testrunner.add
 def test_cross_validation_gpr():
-    run_cross_validation('GPR')
+    return run_cross_validation('GPR')
+
+def print_confusion_matrices(algorithm):
+    X, y = code.loaddata()
+    ytrain, clfs, conf_mats, conf_mat = code.MyCrossValidate(
+        X, 5, {'algorithm':algorithm, 'ifprint':True}, y
+    )
+    output = ''
+    newline = '\n'
+    for k in range(len(conf_mats)):
+        output += 'confusion matrix ' + str(k) + newline
+        output += code.print_confusion_matrix(conf_mats[k]) + newline
+    output += 'overall confusion matrix' + newline
+    output += code.print_confusion_matrix(conf_mat)
+    f = open('conf_mats_' + algorithm + '.txt', 'w')
+    f.write(output)
+    f.close()
+
+@testrunner.add
+def print_confusion_matrices_svm():
+    print_confusion_matrices('SVM');
+
+@testrunner.add
+def print_confusion_matrices_rvm():
+    print_confusion_matrices('RVM');
+
+@testrunner.add
+def print_confusion_matrices_gpr():
+    print_confusion_matrices('GPR');
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

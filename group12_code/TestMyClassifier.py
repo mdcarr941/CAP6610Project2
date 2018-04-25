@@ -6,14 +6,24 @@ def TestMyClassifier(XTest, Parameters, Classifier):
     '''
     Run a trained classifer on a given set of data and return the resulting class labels.
     '''
+
+    try:
+        algorithm = Parameters.pop('algorithm')
+    except KeyError:
+        raise ValueError(
+            'The Parameters dictionary must contain the key "algorithm".'
+        )
     
-    if(Parameters == 'RVM'):
-        YTest = TestMyClassifierRVM(XTest,Classifier)
-    elif(Parameters == 'SVM'):
-        YTest = TestMyClassifierSVM(XTest,Classifier)
-    elif(Parameters == 'GPR'):
-        YTest = TestMyClassifierGPR(XTest,Classifier)
+    if(algorithm == 'RVM'):
+        YTest = TestMyClassifierRVM(XTest, Classifier, **Parameters)
+    elif(algorithm == 'SVM'):
+        YTest = TestMyClassifierSVM(XTest, Classifier, **Parameters)
+    elif(algorithm == 'GPR'):
+        YTest = TestMyClassifierGPR(XTest, Classifier, **Parameters)
     else:
         raise ValueError('Wrong parameters value. The values can either be RVM, SVM or GPR')
+
+    # Return the algorithm entry to the dictionary (because side effects are bad).
+    Parameters['algorithm'] = algorithm
 
     return YTest
