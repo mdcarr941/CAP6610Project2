@@ -8,7 +8,7 @@ from sklearn.gaussian_process.kernels import RBF
 import testing_script
 
 
-(trainingData, labelsVector) = utility_functions.loaddata(doflatten=False)
+# (trainingData, labelsVector) = utility_functions.loaddata(doflatten=False)
 
 # Gaussian Process Regressor
 # gpr = GPR()
@@ -18,7 +18,7 @@ import testing_script
 # print(mean)
 
 # Gaussian Process Classifier
-labelsVector = utility_functions.flatten_targets(labelsVector)
+# labelsVector = utility_functions.flatten_targets(labelsVector)
 
 
 def TrainMyClassifierGPR(X_train, y_train, **kwargs):
