@@ -5,7 +5,6 @@ import utility_functions
 from sklearn.gaussian_process import GaussianProcessRegressor as GPR
 from sklearn.gaussian_process import GaussianProcessClassifier as GPC
 from sklearn.gaussian_process.kernels import RBF
-import testing_script
 
 
 # (trainingData, labelsVector) = utility_functions.loaddata(doflatten=False)
@@ -22,8 +21,11 @@ import testing_script
 
 
 def TrainMyClassifierGPR(X_train, y_train, **kwargs):
-    gpc = GPC(kernel=1.0 * RBF(length_scale=1.0),
-              multi_class='one_vs_one')
+    if 'kernel' in kwargs:
+        gpc = GPC(multi_class='one_vs_one', **kwargs)
+    else:
+        kern = RBF(length_scale=0.4)
+        gpc = GPC(kernel=kern, multi_class='one_vs_one')
     gpc.fit(X_train, y_train)
     return gpc
 
