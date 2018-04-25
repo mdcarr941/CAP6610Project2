@@ -49,8 +49,8 @@ def make_confusion_matrix(targets, estimates):
     for m in class_lbls:
         estimates_idx[m] = (estimates == m)
 
-    N = len(class_lbls)
-    A = np.ndarray((N, N), dtype=np.float)
+    N = max(class_lbls) + 1
+    A = np.zeros((N, N), dtype=np.float)
     for m in class_lbls:
         targets_idx_m = (targets == m)
         for n in class_lbls:
