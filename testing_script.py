@@ -178,33 +178,44 @@ def test_SVC():
     #     #print("Train data: ", X_train, "Target output:", y_train)
     #     #print("Test data: ", X_test, "Test target output:", y_test)
 
-@testrunner.add
-def test_train_svm():
+def run_train(algorithm):
     X, y = loaddata()
     validate_idx = make_random_indices(200, len(y))
     estimate_idx = make_random_indices(1000, len(y))
-    Parameters = {'algorithm': 'SVM'}
+    Parameters = {'algorithm': algorithm}
     return TrainMyClassifier(
         X[estimate_idx], X[validate_idx],
         Parameters, y[estimate_idx]
     )
+
+@testrunner.add
+def test_train_svm():
+    run_train('SVM')
 
 @testrunner.add
 def test_train_rvm():
-    X, y = loaddata()
-    validate_idx = make_random_indices(200, len(y))
-    estimate_idx = make_random_indices(1000, len(y))
-    Parameters = {'algorithm': 'RVM'}
-    return TrainMyClassifier(
-        X[estimate_idx], X[validate_idx],
-        Parameters, y[estimate_idx]
-    )
+    run_train('RVM')
 
 @testrunner.add
-def test_cross_validation():
+def test_train_gpr():
+    run_train('GPR')
+
+def run_cross_validation(algorithm):
     X, y = loaddata()
     indices = make_random_indices(1000, len(y))
-    return MyCrossValidate(X[indices], 5, 'SVM', y[indices])
+    return MyCrossValidate(X[indices], 5, {'algorithm': algorithm}, y[indices])
+
+@testrunner.add
+def test_cross_validation_svm():
+    run_cross_validation('SVM')
+
+@testrunner.add
+def test_cross_validation_rvm():
+    run_cross_validation('RVM')
+
+@testrunner.add
+def test_cross_validation_gpr():
+    run_cross_validation('GPR')
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

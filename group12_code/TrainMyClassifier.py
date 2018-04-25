@@ -14,7 +14,13 @@ def TrainMyClassifier(XEstimate, XValidate, Parameters, ClassLabels):
     XEstimateScaled = scale(XEstimate)
     XValidateScaled = scale(XValidate)
 
-    algorithm = Parameters.pop('algorithm')
+    try:
+        algorithm = Parameters.pop('algorithm')
+    except KeyError:
+        raise ValueError(
+            'The Parameters dictionary must contain the key "algorithm".'
+        )
+
     if(algorithm == 'RVM'):
         EstParameters = TrainMyClassifierRVM(XEstimateScaled, ClassLabels, **Parameters)
     elif(algorithm == 'SVM'):
@@ -25,6 +31,9 @@ def TrainMyClassifier(XEstimate, XValidate, Parameters, ClassLabels):
         raise ValueError(
             'Wrong parameters value. The values can either be RVM, SVM or GPR'
         )
+
+    # Return the algorithm entry to the dictionary (because side effects are bad).
+    Parameters['algorithm'] = algorithm
 
     YValidate = EstParameters.predict(XValidateScaled)
     return YValidate, EstParameters
