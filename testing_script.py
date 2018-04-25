@@ -183,9 +183,10 @@ def test_train_svm():
     X, y = loaddata()
     validate_idx = make_random_indices(200, len(y))
     estimate_idx = make_random_indices(1000, len(y))
+    Parameters = {'algorithm': 'SVM'}
     return TrainMyClassifier(
         X[estimate_idx], X[validate_idx],
-        'SVM', y[estimate_idx]
+        Parameters, y[estimate_idx]
     )
 
 @testrunner.add
@@ -193,9 +194,10 @@ def test_train_rvm():
     X, y = loaddata()
     validate_idx = make_random_indices(200, len(y))
     estimate_idx = make_random_indices(1000, len(y))
+    Parameters = {'algorithm': 'RVM'}
     return TrainMyClassifier(
         X[estimate_idx], X[validate_idx],
-        'RVM', y[estimate_idx]
+        Parameters, y[estimate_idx]
     )
 
 @testrunner.add

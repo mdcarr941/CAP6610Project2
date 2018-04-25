@@ -55,6 +55,13 @@ def TestMyClassifierSVM(XTest, EstParameters):
     # clf2._gamma = estParam["_gamma"]
     # clf2.classes_ = estParam["classes_"]
     #clf2 = EstParameters[0]
+    y_predict = []
     clf2 = EstParameters
-    y_predict = clf2.predict(XTest)
+    probabilities = clf2.predict_proba(XTest)
+    for probs in probabilities:
+        if(max(probs) < 0.3):
+            y_predict.append(-1)
+        else:
+            index = np.argmax(probs,axis=None)
+            y_predict.append(index)
     return y_predict
