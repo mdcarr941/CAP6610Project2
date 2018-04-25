@@ -23,7 +23,7 @@ import testing_script
 
 def TrainMyClassifierGPR(X_train, y_train, **kwargs):
     gpc = GPC(kernel=1.0 * RBF(length_scale=1.0),
-              multi_class='one_vs_one', optimizer=None)
+              multi_class='one_vs_one')
     gpc.fit(X_train, y_train)
     return gpc
 
