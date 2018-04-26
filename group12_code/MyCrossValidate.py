@@ -6,6 +6,19 @@ def MyCrossValidate(XTrain, Nf, Parameters, ClassLabels):
     '''
     Divide a set of data up in Nf chunks, train on the complement of the chunk,
     and then classify the chunk.
+    Arguments:
+        XTrain - ndarray of shape (N, M), the dataset to use for cross validation
+        Nf - integer, the number of folds
+        Parameters - dictionary, algorithm specific parameters. Must contain key 
+            'algorithm' with value 'RVM', 'SVM', or 'GPR'
+        ClassLabels - ndarray of shape (N,), the class labels of the samples in XTrain
+    Returns:
+        YTrain - ndarray of shape(N,), the estimated class labels of the samples
+            in XTrain       
+        EstParametersList - list of length Nf, sklearn classifier objects fitted
+            for each fold       
+        EstConfMatrices - list of length Nf, the confusion matrices from each fold
+        ConfMatrix - ndarray, the overall confusion matrix       
     '''
 
     # Determine the size of each fold.

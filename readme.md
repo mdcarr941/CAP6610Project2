@@ -3,7 +3,12 @@ Dependencies
 
 The code in this project is written for Python 2.7. The following libraries are
 required: sklearn, numpy, and GPy. All of these are available in the PyPI and so
-can be installed easily using pip.
+can be installed easily via pip using:
+```python
+    pip install numpy
+    pip install sklearn
+    pip install GPy
+```
 
 
 Usage
@@ -19,8 +24,11 @@ calling
 ```python
     help(group12_code.<function name>)
 ```
-Tests for the project are located in
-`testing_script.py`. Execute this script to run all test, or import it into the
-interpreter to run individual test cases. 
+Tests for the project are located in `testing_script.py`. Execute this script
+to run all test, or supply a list of test function names on the command line to
+execute only them. 
 
-A dictionary argument is to be passed to to MyCrossValidate(X_Train, Nf, Parameters, y_Target) which contains the key,value pair with key 'algorithm' and can have the values 'RVM', 'SVM' or 'GPR'.
+It is expected that the Parameters argument to MyCrossValidate and to
+TrainMyClassifier will contain the key 'algorithm' which can point to the
+values 'RVM', 'SVM' or 'GPR'. This value determines which classification
+algorithm will be run
