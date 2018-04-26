@@ -266,6 +266,13 @@ def cross_validate_pca(algorithm):
     X = pca.fit_transform(X)
     return code.MyCrossValidate(X, 5, {'algorithm':algorithm}, y)
 
+def call_MyConfMatrix(algorithm, length=5000):
+    X, y = code.loaddata()
+    if length > 0:
+        indices = code.make_random_indices(length, len(y))
+        X = X[indices]
+        y = y[indices]
+
 @testrunner.add
 def cross_validate_pca_rvm():
     return cross_validate_pca('RVM')

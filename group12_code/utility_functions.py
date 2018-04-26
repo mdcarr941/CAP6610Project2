@@ -79,7 +79,7 @@ def average_accuracy(targets, estimates):
     Compute the average number of entries which are the same in targets and estimates.
     '''
     try:
-        return (targets == estimates).sum() / len(targets)
+        return (targets == estimates).sum() / float(len(targets))
     except ZeroDivisionError:
         if len(estimates) == 0:
             return 1
