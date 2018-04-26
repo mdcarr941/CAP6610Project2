@@ -70,7 +70,7 @@ def print_confusion_matrix(A, sep=',', precision=3):
         for k in range(len(row) - 1):
             entry = row[k]
             output += format_string.format(entry) + sep
-        output += format_string.format(row[-1])
+        output += format_string.format(row[-1]) + '\n'
     print output
     return output
 
