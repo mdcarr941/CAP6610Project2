@@ -219,11 +219,16 @@ def test_cross_validation_rvm():
 def test_cross_validation_gpr():
     return run_cross_validation('GPR')
 
-def print_confusion_matrices(algorithm):
+def print_confusion_matrices(algorithm, length=None):
     X, y = code.loaddata()
+    if length > 0:
+        indices = code.make_random_indices(5000 , len(y))
+        X = X[indices]
+        y = y[indices]
     ytrain, clfs, conf_mats, conf_mat = code.MyCrossValidate(
-        X, 5, {'algorithm':algorithm, 'ifprint':True}, y
+        X, 5, {'algorithm':algorithm}, y
     )
+
     output = ''
     newline = '\n'
     for k in range(len(conf_mats)):
@@ -246,6 +251,19 @@ def print_confusion_matrices_rvm():
 @testrunner.add
 def print_confusion_matrices_gpr():
     print_confusion_matrices('GPR');
+
+def cross_validate_pca(algorithm):
+    import sklearn.decomposition
+    
+    X, y = code.loaddata()
+    #pca = sklearn.decomposition.PCA(n_components='mle', svd_solver='full')
+    pca = sklearn.decomposition.PCA(n_components=6)
+    X = pca.fit_transform(X)
+    return code.MyCrossValidate(X, 5, {'algorithm':algorithm}, y)
+
+@testrunner.add
+def cross_validate_pca_rvm():
+    return cross_validate_pca('RVM')
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
