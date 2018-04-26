@@ -23,4 +23,15 @@ Tests for the project are located in
 `testing_script.py`. Execute this script to run all test, or import it into the
 interpreter to run individual test cases. 
 
-A dictionary argument is to be passed to to MyCrossValidate(X_Train, Nf, Parameters, y_Target) which contains the key,value pair with key 'algorithm' and can have the values 'RVM', 'SVM' or 'GPR'.
+A dictionary argument is to be passed to to 
+```python
+    MyCrossValidate(X_Train, Nf, Parameters, y_Target)
+```
+which contains the key,value pair with key 'algorithm' and can have the values 'RVM', 'SVM' or 'GPR'. For example
+```python
+    Ypredict, EstParametersList, EstConfMatrices, ConfMatrix = MyCrossValidate(features_train, 5, {'algorithm': 'RVM'}, targetOutput_train)
+    YTest = TestMyClassifier(features_test, {"algorithm": "RVM"}, est)
+    confMat, acc = MyConfusionMatrix(YTest, targetOutput_test)
+```
+Note that, for the function ##MyConfusionMatrix##, the parameters order cannot exchange.
+
