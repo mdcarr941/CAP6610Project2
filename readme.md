@@ -33,5 +33,5 @@ which contains the key,value pair with key 'algorithm' and can have the values '
     YTest = TestMyClassifier(features_test, {"algorithm": "RVM"}, est)
     confMat, acc = MyConfusionMatrix(YTest, targetOutput_test)
 ```
-Note that, for the function ##MyConfusionMatrix##, the parameters order cannot exchange.
+Note that, for the function MyConfusionMatrix, the parameters order cannot exchange.
 
