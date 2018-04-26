@@ -6,6 +6,7 @@ def MyCrossValidate(XTrain, Nf, Parameters, ClassLabels):
     '''
     Divide a set of data up in Nf chunks, train on the complement of the chunk,
     and then classify the chunk.
+    return Ytrain, EstParametersList, EstConfMatrices, ConfMatrix
     '''
 
     # Determine the size of each fold.
