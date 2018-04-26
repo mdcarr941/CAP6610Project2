@@ -202,10 +202,15 @@ def test_train_rvm():
 def test_train_gpr():
     return run_train('GPR')
 
-def run_cross_validation(algorithm):
+def run_cross_validation(algorithm, length=5000):
     X, y = code.loaddata()
-    indices = code.make_random_indices(1000, len(y))
-    return code.MyCrossValidate(X[indices], 5, {'algorithm': algorithm}, y[indices])
+    if length > 0:
+        indices = code.make_random_indices(length, len(y))
+        X = X[indices]
+        y = y[indices]
+    return code.MyCrossValidate(
+        X, 5, {'algorithm': algorithm, 'ifprint':True}, y
+    )
 
 @testrunner.add
 def test_cross_validation_svm():
@@ -219,10 +224,10 @@ def test_cross_validation_rvm():
 def test_cross_validation_gpr():
     return run_cross_validation('GPR')
 
-def print_confusion_matrices(algorithm, length=None):
+def print_confusion_matrices(algorithm, length=5000):
     X, y = code.loaddata()
     if length > 0:
-        indices = code.make_random_indices(5000 , len(y))
+        indices = code.make_random_indices(length, len(y))
         X = X[indices]
         y = y[indices]
     ytrain, clfs, conf_mats, conf_mat = code.MyCrossValidate(
