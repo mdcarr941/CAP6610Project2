@@ -30,8 +30,8 @@ A dictionary argument is to be passed to to
 which contains the key,value pair with key 'algorithm' and can have the values 'RVM', 'SVM' or 'GPR'. For example
 ```python
     Ypredict, EstParametersList, EstConfMatrices, ConfMatrix = MyCrossValidate(features_train, 5, {'algorithm': 'RVM'}, targetOutput_train)
-    YTest = TestMyClassifier(features_test, {"algorithm": "RVM"}, est)
-    confMat, acc = MyConfusionMatrix(YTest, targetOutput_test)
+    YTest = TestMyClassifier(features_test, {"algorithm": "RVM"}, EstParameters)
+    confMat, acc = MyConfusionMatrix(YTest, ClassNames)
 ```
 Note that, for the function MyConfusionMatrix, the parameters order cannot exchange.
 
