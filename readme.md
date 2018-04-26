@@ -24,10 +24,6 @@ calling
 ```python
     help(group12_code.<function name>)
 ```
-Tests for the project are located in `testing_script.py`. Execute this script
-to run all test, or supply a list of test function names on the command line to
-execute only them. 
-
 It is expected that the Parameters argument to MyCrossValidate and to
 TrainMyClassifier will contain the key 'algorithm' which can point to the
 values 'RVM', 'SVM' or 'GPR'. This value determines which classification
