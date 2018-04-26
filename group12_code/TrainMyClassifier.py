@@ -6,9 +6,18 @@ from GPR import TrainMyClassifierGPR
 
 def TrainMyClassifier(XEstimate, XValidate, Parameters, ClassLabels):
     '''
-        This function trains the corresponding classifier based on the choice
-        The Parameters argument must be a string in the set {'RVM', 'SVM', 'GPR'},
-        indicating which classification algorithm to train.
+    Train a classifier on XEstimate using class labels ClassLabels
+    and test it using XValidate.
+    Arguments:
+        XEstimate - ndarray of shape (N, M), the data to fit the model to
+        XValidate - ndarray of shape (N, M), the data to validate the model on
+        Parameters - dictionary, algorithm specific parameters. Must contain key 
+            'algorithm' with value 'RVM', 'SVM', or 'GPR'
+        ClassLabels - ndarray of shape (N,), the class labels
+            of the samples in XEstimate
+    Returns:
+        YValidate - ndarray of shape (N,), the estimated class labels for XValidate
+        EstParameters - kn sklearn classifier object fitted to the data
     '''
     # standardize the estimate and validate data
     XEstimateScaled = scale(XEstimate)

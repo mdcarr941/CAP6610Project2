@@ -5,6 +5,13 @@ from GPR import TestMyClassifierGPR
 def TestMyClassifier(XTest, Parameters, Classifier):
     '''
     Run a trained classifer on a given set of data and return the resulting class labels.
+    Arguments:
+        XTest - ndarray of shape (N, M), the data to classify
+        Parameters - dictionary, algorithm specific parameters. Must contain key 
+            'algorithm' with value 'RVM', 'SVM', or 'GPR'
+        Classifier - a fitted sklearn classifier object. 
+    Returns:
+        YTest - ndarray of shape (N,), the estimated class labels for XTest       
     '''
 
     try:

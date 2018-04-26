@@ -23,7 +23,7 @@ def TestMyClassifierRVM(XTest, EstParameters):
     clf2 = EstParameters
     probabilities = clf2.decision_function(XTest)
     for prob in probabilities:
-        if(max(prob)< 4.0):
+        if(max(prob)< 3.7):
             y_predict.append(-1)
         else:
             index = np.argmax(prob,axis=None)
