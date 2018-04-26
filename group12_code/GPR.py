@@ -22,10 +22,10 @@ from sklearn.gaussian_process.kernels import RBF
 
 def TrainMyClassifierGPR(X_train, y_train, **kwargs):
     if 'kernel' in kwargs:
-        gpc = GPC(multi_class='one_vs_one', **kwargs)
+        gpc = GPC(multi_class='one_vs_rest', **kwargs)
     else:
         kern = RBF(length_scale=0.4)
-        gpc = GPC(kernel=kern, multi_class='one_vs_one')
+        gpc = GPC(kernel=kern, multi_class='one_vs_rest')
     gpc.fit(X_train, y_train)
     return gpc
 
